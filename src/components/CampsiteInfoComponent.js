@@ -1,12 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Card, CardImg, CardImgOverlay, CardText, CardBody, CardTitle } from 'reactstrap';
 
 
-// Create CampsiteInfo Component
-class CampsiteInfo extends Component {
+
 
  // Create the Selected campite method to show it after the user clicks 
-    renderCampsite(campsite) {
+  function RenderCampsite({campsite}) {
         if (campsite) {
             return (
             <div className="col-md-5 m-1">
@@ -23,13 +22,13 @@ class CampsiteInfo extends Component {
     }
 
     // Create a Comments method to iterate through the array of comments
-    renderComments(comments) {      
+    function RenderComments({comments}) {      
         if (comments) {
         return (
             <div className="col-md-5 m-1">
              <h4>Comments</h4>   
               {
-              comments.comments.map(comment => <div key={comment.id}>{comment.text} <br/>
+              comments.map(comment => <div key={comment.id}>{comment.text} <br/>
               {comment.author},&nbsp;
                {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(comment.date)))} <br/> <br/>
               </div>
@@ -42,18 +41,18 @@ class CampsiteInfo extends Component {
         
 
    // Paint the Selected campsite and comments at the bottom of the screen
-    render() {
+   function CampsiteInfo(props) {
+    if (props.campsite) {
         return (
             <div className="container">
                 <div className="row">
-                    {this.renderCampsite(this.props.campsite)} 
-                    {this.renderComments(this.props.campsite)}                     
+                    <RenderCampsite campsite={props.campsite} />
+                    <RenderComments comments={props.campsite.comments} />
                 </div>
-            </div>    
-
+            </div>
         );
     }
+    return <div />;
 }
-
 
 export default CampsiteInfo;
